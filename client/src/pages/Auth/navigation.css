@@ -1,0 +1,20 @@
+#navigation_container {
+  width: 4%;
+  transition: width 0.3s ease-in-out;
+  overflow: hidden; /*hide overflowing content during transition*/
+}
+
+#navigation_container:hover {
+  width: 15%;
+}
+
+/* initially hide nave-item-name */
+.nav_item_name {
+  display: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+#navigation_container:hover .nav_item_name {
+  display: block;
+  opacity: 1;
+}

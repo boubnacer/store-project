@@ -57,6 +57,9 @@ const login = asyncHandler(async (req, res) => {
         isAdmin: existingUser.isAdmin,
       });
       return;
+    } else {
+      res.status(400);
+      throw new Error("Incorrect email or password");
     }
   }
 });
@@ -74,9 +77,96 @@ const getAllUsers = asyncHandler(async (req, res) => {
 });
 
 const getProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById({ _id: req.userId });
+  const user = await User.findById({ _id: req.user._id });
 
-  res.status(200).json(user);
+  if (user) {
+    res
+      .status(200)
+      .json({ _id: user._id, username: user.username, email: user.email });
+  } else {
+    res.status(404);
+    throw new Error("User does not found!");
+  }
 });
 
-export { createUser, login, logout, getAllUsers, getProfile };
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById({ _id: req.user._id });
+
+  const { username, email, password } = req.body;
+
+  if (user) {
+    user.username = username || user.username;
+    user.email = email || user.email;
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashpwd = await bcrypt.hash(password, salt);
+      user.password = hashpwd;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({ update: true, updatedUser });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+const deleteUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    if (user.isAdmin) {
+      res.status(400);
+      throw new Error("Cannot delete admin user");
+    }
+    await User.deleteOne({ _id: user._id });
+    res.json({ message: "User deleted" });
+  } else {
+    res.status(404);
+    throw new Error("User does not found");
+  }
+});
+
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select("-password");
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404);
+    throw new Error("User does not exist !");
+  }
+});
+
+const updateUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  const { username, email, password, isAdmin } = req.body;
+
+  if (user) {
+    user.username = username || user.username;
+    user.email = email || user.email;
+    user.isAdmin = Boolean(isAdmin);
+    if (password) {
+      const salt = await bcrypt.getSalt(10);
+      const hashPwd = await bcrypt.hash(password, salt);
+      user.password = hashPwd;
+    }
+    const updatedUser = await user.save();
+    res.status(200).json(updatedUser);
+  } else {
+    res.status(400);
+    throw new Error("User not found");
+  }
+});
+
+export {
+  createUser,
+  login,
+  logout,
+  getAllUsers,
+  getProfile,
+  updateUserProfile,
+  deleteUserById,
+  getUserById,
+  updateUserById,
+};
