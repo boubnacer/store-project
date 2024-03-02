@@ -39,8 +39,7 @@ const createUser = asyncHandler(async (req, res) => {
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password)
-    return res.status(400).json({ message: "please fill all the inputs" });
+  if (!email || !password) throw new Error("Please fill all the inputs");
 
   const existingUser = await User.findOne({ email });
 
@@ -105,7 +104,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
     const updatedUser = await user.save();
 
-    res.json({ update: true, updatedUser });
+    res.json(updatedUser);
   } else {
     res.status(404);
     throw new Error("User not found");
