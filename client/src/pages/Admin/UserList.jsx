@@ -60,7 +60,7 @@ function UserList() {
         <Loader />
       ) : error ? (
         <Message variant="danger">
-          {error?.data.message || error.message}
+          {error?.data || error?.data?.message || error.error}
         </Message>
       ) : (
         <div className="flex flex-col md:flex-row">

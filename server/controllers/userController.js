@@ -71,7 +71,13 @@ const logout = asyncHandler(async (req, res) => {
 });
 
 const getAllUsers = asyncHandler(async (req, res) => {
+  const userId = await req.user._id;
   const users = await User.find({});
+
+  const isUserAdmin = await User.findOne({ _id: userId });
+  if (!isUserAdmin)
+    return res.status(401).json({ message: "Not authorized as admin" });
+
   res.status(200).json(users);
 });
 
@@ -144,7 +150,7 @@ const updateUserById = asyncHandler(async (req, res) => {
   if (user) {
     user.username = username || user.username;
     user.email = email || user.email;
-    user.isAdmin = Boolean(isAdmin);
+    user.isAdmin = Boolean(isAdmin) || user.isAdmin;
     if (password) {
       const salt = await bcrypt.getSalt(10);
       const hashPwd = await bcrypt.hash(password, salt);
