@@ -65,7 +65,7 @@ const getCategories = asyncHandler(async (req, res) => {
 
     res.status(200).json(categories);
   } catch (error) {
-    res.status(400).json(error.message);
+    res.status(400).json(error);
   }
 });
 

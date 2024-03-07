@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const categorySchema = new mongoose.Schema({
   name: {
+    // _id: Object,
     type: String,
     required: true,
     trim: true,

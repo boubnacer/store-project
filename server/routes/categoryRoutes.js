@@ -13,6 +13,8 @@ import {
   authorizedAdmin,
 } from "../middlewares/authMiddleware.js";
 
+router.route("/categories").get(getCategories);
+
 router.route("/").post(authenticate, authorizedAdmin, createCategory);
 
 router
@@ -20,7 +22,5 @@ router
   .put(authenticate, authorizedAdmin, updateCategory)
   .delete(authenticate, authorizedAdmin, deleteCategory)
   .get(readCategory);
-
-router.route("/categories").get(getCategories);
 
 export default router;
