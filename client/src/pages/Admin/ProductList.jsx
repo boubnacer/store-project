@@ -22,14 +22,14 @@ function ProductList() {
   if (isError) return <div>Error loading products</div>;
 
   return (
-    <div className="container mx-[9rem]">
+    <div className="container">
       <div className="flex flex-col md:flex-row">
         <div className="p-3">
-          <h1 className="text-xl ml-[2rem] font-bold h-12 text-white">
+          <h1 className="text-xl ml-[3rem] font-bold h-12 text-white">
             All products ({products.length})
           </h1>
 
-          <div className="flex flex-wrap justify-around items-center gap-[9rem]">
+          <div className="flex flex-wrap justify-around items-center gap-[1rem]">
             {products.map((product) => (
               <Link
                 key={product._id}
