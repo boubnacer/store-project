@@ -34,7 +34,7 @@ function Home() {
             </Link>
           </div>
 
-          <div className="flex justify-center flex-wrap mt-[2rem]">
+          <div className="flex  flex-wrap mt-[2rem] ml-[8rem]">
             {data.products.map((product) => (
               <div key={product._id}>
                 <Product product={product} />
