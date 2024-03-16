@@ -4,7 +4,7 @@ import {
   useCreateReviewMutation,
   useGetProductDetailsQuery,
 } from "../../app/api/productApiSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
@@ -20,6 +20,7 @@ import moment from "moment";
 import Ratings from "../../components/Ratings";
 import ProductReview from "./ProductReview";
 import { toast } from "react-toastify";
+import { addToCart } from "../../app/features/cart/cartSlice";
 
 function ProductDetails() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -35,6 +36,7 @@ function ProductDetails() {
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [qty, setQty] = useState(1);
@@ -52,7 +54,10 @@ function ProductDetails() {
     }
   };
 
-  const addToCartHandler = () => {};
+  const addToCartHandler = () => {
+    dispatch(addToCart({ ...product, qty }));
+    navigate("/cart");
+  };
 
   return (
     <>

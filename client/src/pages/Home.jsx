@@ -1,10 +1,10 @@
 import { useParams } from "react-router";
-import { useGetProductsQuery } from "./app/api/productApiSlice";
-import Header from "./components/Header";
-import Loader from "./components/Loader";
-import Message from "./components/Message";
+import { useGetProductsQuery } from "../app/api/productApiSlice";
+import Header from "../components/Header";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 import { Link } from "react-router-dom";
-import Product from "./pages/Product/Product";
+import Product from "./Product/Product";
 
 function Home() {
   const { keyword } = useParams();

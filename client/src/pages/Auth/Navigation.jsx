@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "../../app/api/usersApiSlice";
 import { logout } from "../../app/features/auth/authSlice";
 import FavoriteCounts from "../../components/FavoriteCounts";
+import CartCount from "../../components/CartCount";
 
 const Navigation = () => {
   const { userInfo } = useSelector((state) => state.auth);
@@ -59,34 +60,33 @@ const Navigation = () => {
       id="navigation-container"
     >
       <div className="flex flex-col justify-center space-y-4">
-        <Link
-          to="/"
-          className="flex items-center transition-transform transform hover:translate-x-2"
-        >
-          <AiOutlineHome size={26} className="mr-2 mt-[3rem]" />
-          <span className="hidden nav-item-name mt-[3rem]">HOME</span>
+        <Link className="flex relative" to="/">
+          <div className="flex items-center transition-transform transform hover:translate-x-2">
+            <AiOutlineHome size={26} className="mr-2 mt-[3rem]" />
+            <span className="hidden nav-item-name mt-[3rem]">HOME</span>
+          </div>
         </Link>
-        <Link
-          to="/shop"
-          className="flex items-center transition-transform transform hover:translate-x-2"
-        >
-          <AiOutlineShopping size={26} className="mr-2 mt-[3rem]" />
-          <span className="hidden nav-item-name mt-[3rem]">SHOP</span>
+        <Link className="flex relative" to="/shop">
+          <div className="flex items-center transition-transform transform hover:translate-x-2">
+            <AiOutlineShopping size={26} className="mr-2 mt-[3rem]" />
+            <span className="hidden nav-item-name mt-[3rem]">SHOP</span>
+          </div>
         </Link>
-        <Link
-          to="/cart"
-          className="flex items-center transition-transform transform hover:translate-x-2"
-        >
-          <AiOutlineShoppingCart size={26} className="mr-2 mt-[3rem]" />
-          <span className="hidden nav-item-name mt-[3rem]">CART</span>
+        <Link className="flex relative" to="/cart">
+          <div className="flex items-center transition-transform transform hover:translate-x-2">
+            <AiOutlineShoppingCart size={26} className="mr-2 mt-[3rem]" />
+            <span className="hidden nav-item-name mt-[3rem]">CART</span>
+          </div>
+          <div className="absolute top-9">
+            <CartCount />
+          </div>
         </Link>
-        <Link
-          to="/favorites"
-          className="flex items-center transition-transform transform hover:translate-x-2"
-        >
-          <FaHeart size={26} className="mr-2  mt-[3rem]" />
-          <span className="hidden nav-item-name mt-[3rem]">FAVORATE</span>
-          <FavoriteCounts />
+        <Link className="flex relative" to="/favorites">
+          <div className="flex items-center transition-transform transform hover:translate-x-2">
+            <FaHeart size={26} className="mr-2  mt-[3rem]" />
+            <span className="hidden nav-item-name mt-[3rem]">FAVORATE</span>
+            <FavoriteCounts />
+          </div>
         </Link>
       </div>
 
@@ -181,19 +181,13 @@ const Navigation = () => {
       {!userInfo && (
         <ul>
           <li>
-            <Link
-              to="/login"
-              className="flex items-center transition-transform transform hover:translate-x-2"
-            >
+            <Link to="/login">
               <AiOutlineLogin size={26} className="mr-2 mt-[3rem]" />
               <span className="hidden nav-item-name mt-[3rem]">login</span>
             </Link>
           </li>
           <li>
-            <Link
-              to="/register"
-              className="flex items-center transition-transform transform hover:translate-x-2"
-            >
+            <Link to="/register">
               <AiOutlineUserAdd size={26} className="mr-2 mt-[3rem]" />
               <span className="hidden nav-item-name mt-[3rem]">register</span>
             </Link>
