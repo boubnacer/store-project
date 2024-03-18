@@ -13,6 +13,7 @@ import {
   fetchProducts,
   fetchTopProducts,
   getAllProducts,
+  getFilteredProducts,
   getSingleProduct,
   updateProduct,
 } from "../controllers/productController.js";
@@ -22,6 +23,7 @@ const router = express.Router();
 router.route("/allproducts").get(getAllProducts);
 router.route("/top").get(fetchTopProducts);
 router.route("/new").get(fetchNewProducts);
+router.route("/filtered-products").post(getFilteredProducts);
 
 router
   .route("/")
