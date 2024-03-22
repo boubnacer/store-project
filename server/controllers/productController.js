@@ -196,15 +196,12 @@ const fetchNewProducts = asyncHandler(async (req, res) => {
 const getFilteredProducts = asyncHandler(async (req, res) => {
   try {
     const { checked, radio } = req.body;
-    console.log({ checked, radio });
     let args = {};
 
     if (checked.length > 0) args.category = checked;
     if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
 
     const products = await Product.find(args);
-
-    console.log(products);
 
     res.json(products);
   } catch (error) {
